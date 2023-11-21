@@ -1,19 +1,19 @@
+import torch
 from flask import Flask, request, jsonify
-import joblib
 import os
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 app = Flask(__name__)
 
 # Cargar modelo y tokenizer
-def load_model_and_tokenizer(model_filename='modelo_entrenado.joblib', tokenizer_filename='tokenizer.joblib'):
+def load_model_and_tokenizer(model_filename='modelo_entrenado.pth', tokenizer_filename='tokenizer.pth'):
     directorio_guardado = os.path.dirname(os.path.realpath(__file__))  # Obtener el directorio del script actual
     ruta_modelo = os.path.join(directorio_guardado, model_filename)
     ruta_tokenizer = os.path.join(directorio_guardado, tokenizer_filename)
 
-    model = joblib.load(ruta_modelo)
-    tokenizer = joblib.load(ruta_tokenizer)
-    return model, tokenizer
+    # Cargar el modelo y el tokenizer con torch.load
+    model = torch.load(ruta_modelo, map_location=torch.device('cpu'))
+    tokenizer = torch.load(ruta_tokenizer, map_location=torch.device('cpu'))
+    return model,tokenizer
 
 # Definir la función de predicción
 def get_prediction(text, model, tokenizer):
