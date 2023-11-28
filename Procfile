@@ -1,1 +1,1 @@
-web: python app_tooly.py
+web: pipenv run gunicorn tooly-modelo:app
