@@ -41,7 +41,6 @@ def get_prediction(text, model, tokenizer):
 def predict():
     data = request.get_json(force=True)
     text = data['text']
-
     # Hacer predicción utilizando el modelo y tokenizer cargados
     predictions = get_prediction(text, loaded_model, loaded_tokenizer)
 
